@@ -31,7 +31,7 @@ defmodule SnowflexSequence do
   @doc """
   Generates the Id based on the sequence node and counter.
 
-  This is a not thread-safe function, that's why it bangs.any()
+  This is a not thread-safe function, that's why it bangs.
   It throws a SnowflexSequenceOverflow in case sequence number
   goes higher than its bits allow when used in parallel.
   """

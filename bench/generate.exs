@@ -10,7 +10,7 @@ Benchee.run(%{
   "ecto_uuid" => fn ->
     Enum.each(sample, fn _i -> Ecto.UUID.generate() end)
   end,
-  "snowflex_sequence" => fn ->
+  "snowflexid_sequence" => fn ->
       # SnowflexSequence.generate!/1 cannot run in parallel for same sequence
       {:ok, snow_seq} = SnowflexSequence.new(1)
 
@@ -18,7 +18,7 @@ Benchee.run(%{
       SnowflexSequence.generate!(snow_seq)
     end)
   end,
-  "snowflex_table" => fn ->
+  "snowflexid_table" => fn ->
     node_id = 1
     Enum.each(sample, fn _i ->
       SnowflexTable.generate(node_id)

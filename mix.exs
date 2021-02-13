@@ -9,14 +9,14 @@ defmodule SnowflakeId.MixProject do
 
   def project do
     [
-      app: :snowflex,
+      app: :snowflexid,
       version: @version,
       description: @description,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
-      source_url: "https://github.com/jyeshe/snowflex",
+      source_url: "https://github.com/jyeshe/snowflexid",
       docs: [
         main: "Snowflex"
       ]
@@ -28,7 +28,7 @@ defmodule SnowflakeId.MixProject do
       files: ["lib", "mix.exs", "README.md", "LICENSE*"],
       maintainers: ["Rogerio Pontual"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/jyeshe/snowflex"}
+      links: %{"GitHub" => "https://github.com/jyeshe/snowflexid"}
     ]
   end
 

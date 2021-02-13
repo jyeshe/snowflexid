@@ -3,7 +3,7 @@ defmodule SnowflexTable do
   Keeps track of Snowflex nodes and sequential number with ETS.
   """
 
-  @table :snowflex_ets
+  @table :snowflexid_ets
   @increment_op {2, 1, SnowflexId.sequence_limit(), 1}
 
   @doc """

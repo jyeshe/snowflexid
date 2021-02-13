@@ -11,7 +11,7 @@ Benchee.run(%{
       :ets.insert(table, record)
     end)
   end,
-  "snowflex_ets" => fn ->
+  "snowflexid_ets" => fn ->
     table = :ets.new(:table, [:ordered_set])
     {:ok, snow_seq} = SnowflexSequence.new(1)
 

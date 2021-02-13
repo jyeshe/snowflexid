@@ -30,14 +30,14 @@ serves multiple node ids.
 
 This is optional if you want to setup a custom epoch (in milliseconds).
 
-config :snowflex, epoch, 1294566368000
+config :snowflexid, epoch, 1294566368000
 
 ## Installation
 
 ```elixir
 def deps do
   [
-    {:snowflex, "~> 0.1.0"}
+    {:snowflexid, "~> 0.1.0"}
   ]
 end
 ```

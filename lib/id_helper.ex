@@ -10,7 +10,7 @@ defmodule SnowflexId do
   def sequence_limit, do: 4095
 
   @elixir_epoch :erlang.universaltime_to_posixtime({{2011, 1, 9}, {9, 46, 8}}) * 1000
-  @custom_epoch Application.get_env(:snowflex, :epoch, @elixir_epoch)
+  @custom_epoch Application.get_env(:snowflexid, :epoch, @elixir_epoch)
 
   @spec generate!(integer, integer) :: integer
   @doc """
