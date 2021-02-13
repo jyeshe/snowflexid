@@ -19,7 +19,7 @@ defmodule SnowflexTable do
   """
   @spec generate(integer) :: {:ok, integer} | :error
   def generate(node_id) do
-    if node_id > 0 or node_id < SnowflexId.node_limit() do
+    if node_id >= 0 or node_id <= SnowflexId.node_limit() do
       seq_num = :ets.update_counter(@table, node_id, @increment_op, {node_id, 0})
 
       {:ok, SnowflexId.generate!(node_id, seq_num)}
