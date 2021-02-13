@@ -1,5 +1,7 @@
-defmodule SnowflexId.IdHelper do
-  @moduledoc false
+defmodule SnowflexId.Protocol do
+  @moduledoc """
+  Defines ID generation rules and generates Snowflex IDs.
+  """
 
   @spec node_limit :: integer
   def node_limit, do: 1023
@@ -32,10 +34,10 @@ defmodule SnowflexId.IdHelper do
   end
 
   @doc """
-  Generates the id for a node continuing with the sequence number.
+  Generates an id for a node continuing with the sequence number.
   Returns {:error, :sequence_overflow} or {:error, :node_overflow} if a param is out of bounds.
   """
-  @spec generate(integer, integer) :: {:ok, integer} | {:error, term}
+  @spec generate(integer, integer) :: {:ok, integer} | {:error, :sequence_overflow | :node_overflow}
   def generate(node_id, sequence_num) do
     cond do
       sequence_num > sequence_limit() ->
@@ -49,10 +51,9 @@ defmodule SnowflexId.IdHelper do
     end
   end
 
-  defp new_id(node_id, seq_num) do
-    ts = :os.system_time(:millisecond) - @custom_epoch
+  defp new_id(node_id, seq_num, opts \\ []) do
+    ts = :os.system_time(:millisecond) - Keyword.get(opts, :epoch, @elixir_epoch)
 
-    <<0::1, ts::41, node_id::10, seq_num::12>>
-    |> :binary.decode_unsigned()
+    :binary.decode_unsigned(<<0::1, ts::41, node_id::10, seq_num::12>>)
   end
 end

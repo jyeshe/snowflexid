@@ -5,8 +5,8 @@ defmodule SnowflexSequenceTest do
 
   doctest Sequence
 
-  @node_sample 1..SnowflexId.IdHelper.node_limit()
-  @seq_sample 1..SnowflexId.IdHelper.sequence_limit()
+  @node_sample 1..SnowflexId.Protocol.node_limit()
+  @seq_sample 1..SnowflexId.Protocol.sequence_limit()
 
   test "generate!/1" do
     Enum.each(@node_sample, fn i ->

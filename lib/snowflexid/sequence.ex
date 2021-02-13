@@ -1,7 +1,7 @@
 defmodule SnowflexId.Sequence do
   @moduledoc false
 
-  alias SnowflexId.IdHelper
+  alias SnowflexId.Protocol
 
   @type t :: %__MODULE__{
           counter_ref: :counters.counters_ref(),
@@ -16,7 +16,7 @@ defmodule SnowflexId.Sequence do
   """
   @spec new(integer) :: {:error, :node_overflow} | {:ok, t()}
   def new(node_id \\ @default_node_id) do
-    if node_id < 0 or node_id > IdHelper.node_limit() do
+    if node_id < 0 or node_id > Protocol.node_limit() do
       {:error, :node_overflow}
     else
       {:ok,
@@ -38,13 +38,13 @@ defmodule SnowflexId.Sequence do
   def generate!(sequence) do
     count = :counters.get(sequence.counter_ref, 1)
     # restarts to 1 when reachs max sequence number
-    if count <= IdHelper.sequence_limit() do
+    if count <= Protocol.sequence_limit() do
       :counters.put(sequence.counter_ref, 1, 1)
     else
       :counters.add(sequence.counter_ref, 1, 1)
     end
 
-    IdHelper.generate!(sequence.node_id, count)
+    Protocol.generate!(sequence.node_id, count)
   end
 
   # creates a counter initilized with 1
