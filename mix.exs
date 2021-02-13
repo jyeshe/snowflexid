@@ -18,7 +18,7 @@ defmodule SnowflakeId.MixProject do
       package: package(),
       source_url: "https://github.com/jyeshe/snowflexid",
       docs: [
-        main: "Snowflex"
+        main: "SnowflexId"
       ]
     ]
   end
