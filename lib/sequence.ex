@@ -38,7 +38,7 @@ defmodule SnowflexSequence do
   def generate!(sequence) do
     count = :counters.get(sequence.counter_ref, 1)
     # restarts to 1 when reachs max sequence number
-    if count == SnowflexId.sequence_limit() do
+    if count <= SnowflexId.sequence_limit() do
       :counters.put(sequence.counter_ref, 1, 1)
     else
       :counters.add(sequence.counter_ref, 1, 1)
