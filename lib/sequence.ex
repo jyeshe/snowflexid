@@ -4,10 +4,10 @@ defmodule SnowflexSequence do
   to generate the SnowflexId.
   """
   @type t :: %SnowflexSequence{
-    counter_ref: :counters.counters_ref(),
-    node_id: integer
-  }
-  defstruct [counter_ref: nil, node_id: nil]
+          counter_ref: :counters.counters_ref(),
+          node_id: integer
+        }
+  defstruct counter_ref: nil, node_id: nil
 
   @default_node_id 1
 
@@ -19,10 +19,11 @@ defmodule SnowflexSequence do
     if node_id < 0 or node_id > SnowflexId.node_limit() do
       {:error, :node_overflow}
     else
-      {:ok, %SnowflexSequence{
-          counter_ref: new_counter(),
-          node_id: node_id
-      }}
+      {:ok,
+       %SnowflexSequence{
+         counter_ref: new_counter(),
+         node_id: node_id
+       }}
     end
   end
 
@@ -42,6 +43,7 @@ defmodule SnowflexSequence do
     else
       :counters.add(sequence.counter_ref, 1, 1)
     end
+
     SnowflexId.generate!(sequence.node_id, count)
   end
 

@@ -9,7 +9,7 @@ defmodule SnowflexId do
   @spec sequence_limit :: integer
   def sequence_limit, do: 4095
 
-  @elixir_epoch :erlang.universaltime_to_posixtime({{2011,1,9}, {9,46,8}})*1000
+  @elixir_epoch :erlang.universaltime_to_posixtime({{2011, 1, 9}, {9, 46, 8}}) * 1000
   @custom_epoch Application.get_env(:snowflex, :epoch, @elixir_epoch)
 
   @spec generate!(integer, integer) :: integer
@@ -20,9 +20,11 @@ defmodule SnowflexId do
   def generate!(node_id, sequence_num) do
     cond do
       sequence_num > sequence_limit() ->
-        throw SnowflexSequeceOverflow
+        throw(SnowflexSequeceOverflow)
+
       node_id > node_limit() ->
-        throw SnowflexNodeOverflow
+        throw(SnowflexNodeOverflow)
+
       true ->
         new_id(node_id, sequence_num)
     end
@@ -37,8 +39,10 @@ defmodule SnowflexId do
     cond do
       sequence_num > sequence_limit() ->
         {:error, :sequence_overflow}
+
       node_id > node_limit() ->
         {:error, :node_overflow}
+
       true ->
         {:ok, new_id(node_id, sequence_num)}
     end
