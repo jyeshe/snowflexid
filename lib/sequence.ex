@@ -16,19 +16,14 @@ defmodule SnowflexSequence do
   Creates a struct with an erlang counter and associates it to a certain node.
   """
   def new(node_id \\ @default_node_id) do
-    cond do
-      node_id < 0 ->
-        {:error, :node_overflow}
-
-      node_id > SnowflexId.node_limit() ->
-        {:error, :node_overflow}
-
-      true ->
-        {:ok,
-         %SnowflexSequence{
-           counter_ref: new_counter(),
-           node_id: node_id
-         }}
+    if node_id < 0 or node_id > SnowflexId.node_limit() do
+      {:error, :node_overflow}
+    else
+      {:ok,
+       %SnowflexSequence{
+         counter_ref: new_counter(),
+         node_id: node_id
+       }}
     end
   end
 
