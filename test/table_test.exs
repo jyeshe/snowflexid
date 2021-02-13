@@ -1,17 +1,20 @@
 defmodule SnowflexTableTest do
   use ExUnit.Case, async: true
-  doctest SnowflexTable
 
-  @node_sample 1..SnowflexId.node_limit()
-  @seq_sample 1..SnowflexId.sequence_limit()
+  alias SnowflexId.Table
+
+  doctest Table
+
+  @node_sample 1..SnowflexId.IdHelper.node_limit()
+  @seq_sample 1..SnowflexId.IdHelper.sequence_limit()
 
   test "generate/1" do
-    SnowflexTable.init()
+    Table.init()
 
     Enum.each(@node_sample, fn node_id ->
       list =
         Enum.map(@seq_sample, fn _j ->
-          {:ok, id} = SnowflexTable.generate(node_id)
+          {:ok, id} = Table.generate(node_id)
           id
         end)
 

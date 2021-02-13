@@ -1,8 +1,6 @@
-defmodule SnowflexId do
-  @moduledoc """
-  Here is where the ID is actually calculated using custom or
-  elixir epoch (since first commit).
-  """
+defmodule SnowflexId.IdHelper do
+  @moduledoc false
+
   @spec node_limit :: integer
   def node_limit, do: 1023
 
@@ -10,13 +8,16 @@ defmodule SnowflexId do
   def sequence_limit, do: 4095
 
   @elixir_epoch :erlang.universaltime_to_posixtime({{2011, 1, 9}, {9, 46, 8}}) * 1000
+
+  # TODO: receive this as an option or, at least, fetch dinamically, libraries
+  # shouldnt rely on recompilation to change options
   @custom_epoch Application.get_env(:snowflexid, :epoch, @elixir_epoch)
 
-  @spec generate!(integer, integer) :: integer
   @doc """
   Generates the id for a node continuing with the sequence number.
   Throws SnowflexSequeceOverflow or SnowflexNodeOverflow if a param is out of bounds.
   """
+  @spec generate!(integer, integer) :: integer
   def generate!(node_id, sequence_num) do
     cond do
       sequence_num > sequence_limit() ->
@@ -30,11 +31,11 @@ defmodule SnowflexId do
     end
   end
 
-  @spec generate(integer, integer) :: {:ok, integer} | {:error, term}
   @doc """
   Generates the id for a node continuing with the sequence number.
   Returns {:error, :sequence_overflow} or {:error, :node_overflow} if a param is out of bounds.
   """
+  @spec generate(integer, integer) :: {:ok, integer} | {:error, term}
   def generate(node_id, sequence_num) do
     cond do
       sequence_num > sequence_limit() ->
