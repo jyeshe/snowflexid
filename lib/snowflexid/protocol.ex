@@ -11,34 +11,29 @@ defmodule SnowflexId.Protocol do
 
   @elixir_epoch :erlang.universaltime_to_posixtime({{2011, 1, 9}, {9, 46, 8}}) * 1000
 
-  # TODO: receive this as an option or, at least, fetch dinamically, libraries
-  # shouldnt rely on recompilation to change options
-  @custom_epoch Application.get_env(:snowflexid, :epoch, @elixir_epoch)
-
   @doc """
   Generates the id for a node continuing with the sequence number.
-  Throws SnowflexSequeceOverflow or SnowflexNodeOverflow if a param is out of bounds.
+
+  Raises `SnowflexId.SequenceOverflowError` or `SnowflexId.NodeOverflowError` 
+  if a param is out of bounds.
   """
   @spec generate!(integer, integer) :: integer
-  def generate!(node_id, sequence_num) do
+  def generate!(node_id, sequence_num, opts \\ []) do
     cond do
       sequence_num > sequence_limit() ->
-        throw(SnowflexSequeceOverflow)
+        raise SnowflexId.SequenceOverflowError, sequence_number: sequence_num, sequence_max: sequence_limit()
 
       node_id > node_limit() ->
-        throw(SnowflexNodeOverflow)
+        raise SnowflexId.NodeOverflowError, node_id: node_id, node_limit: node_limit()
 
       true ->
-        new_id(node_id, sequence_num)
+        new_id(node_id, sequence_num, opts)
     end
   end
 
-  @doc """
-  Generates an id for a node continuing with the sequence number.
-  Returns {:error, :sequence_overflow} or {:error, :node_overflow} if a param is out of bounds.
-  """
+  @doc "Generates an id for a node continuing with the sequence number."
   @spec generate(integer, integer) :: {:ok, integer} | {:error, :sequence_overflow | :node_overflow}
-  def generate(node_id, sequence_num) do
+  def generate(node_id, sequence_num, opts \\ []) do
     cond do
       sequence_num > sequence_limit() ->
         {:error, :sequence_overflow}
@@ -47,11 +42,11 @@ defmodule SnowflexId.Protocol do
         {:error, :node_overflow}
 
       true ->
-        {:ok, new_id(node_id, sequence_num)}
+        {:ok, new_id(node_id, sequence_num, opts)}
     end
   end
 
-  defp new_id(node_id, seq_num, opts \\ []) do
+  defp new_id(node_id, seq_num, opts) do
     ts = :os.system_time(:millisecond) - Keyword.get(opts, :epoch, @elixir_epoch)
 
     :binary.decode_unsigned(<<0::1, ts::41, node_id::10, seq_num::12>>)
