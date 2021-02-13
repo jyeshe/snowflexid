@@ -8,9 +8,12 @@ defmodule SnowflexSequenceTest do
   test "generate!/1" do
     Enum.each(@node_sample, fn i ->
       {:ok, snow_seq} = SnowflexSequence.new(i)
-      list = Enum.map(@seq_sample, fn _j ->
-        SnowflexSequence.generate!(snow_seq)
-      end)
+
+      list =
+        Enum.map(@seq_sample, fn _j ->
+          SnowflexSequence.generate!(snow_seq)
+        end)
+
       assert list == Enum.sort(list)
     end)
   end

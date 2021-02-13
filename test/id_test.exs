@@ -7,19 +7,23 @@ defmodule SnowflexIdTest do
 
   test "generate/2" do
     Enum.each(@node_sample, fn i ->
-      list = Enum.map(@seq_sample, fn j ->
-        {:ok, id} = SnowflexId.generate(i, j)
-        id
-      end)
+      list =
+        Enum.map(@seq_sample, fn j ->
+          {:ok, id} = SnowflexId.generate(i, j)
+          id
+        end)
+
       assert list == Enum.sort(list)
     end)
   end
 
   test "generate!/2" do
     Enum.each(@node_sample, fn i ->
-      list = Enum.map(@seq_sample, fn j ->
-        SnowflexId.generate!(i, j)
-      end)
+      list =
+        Enum.map(@seq_sample, fn j ->
+          SnowflexId.generate!(i, j)
+        end)
+
       assert list == Enum.sort(list)
     end)
   end

@@ -7,11 +7,14 @@ defmodule SnowflexTableTest do
 
   test "generate/1" do
     SnowflexTable.init()
+
     Enum.each(@node_sample, fn node_id ->
-      list = Enum.map(@seq_sample, fn _j ->
-        {:ok, id} = SnowflexTable.generate(node_id)
-        id
-      end)
+      list =
+        Enum.map(@seq_sample, fn _j ->
+          {:ok, id} = SnowflexTable.generate(node_id)
+          id
+        end)
+
       assert list == Enum.sort(list)
     end)
   end
