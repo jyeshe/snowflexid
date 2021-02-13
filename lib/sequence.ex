@@ -1,7 +1,7 @@
 defmodule SnowflexSequence do
   @moduledoc """
-  This Sequence module creates an erlang counter and uses it
-  as the sequence number part of the SnowflexId.
+  Encapsulates a erlang counter and uses it as the sequence number part
+  to generate the SnowflexId.
   """
   @type t :: %SnowflexSequence{
     counter_ref: :counters.counters_ref(),

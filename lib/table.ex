@@ -1,16 +1,16 @@
 defmodule SnowflexTable do
   @moduledoc """
-  Keeps track of nodes and sequential number with ETS.
+  Keeps track of Snowflex nodes and sequential number with ETS.
   """
 
   @table :snowflex_ets
   @increment_op {2, 1, SnowflexId.sequence_limit(), 1}
 
   @doc """
-  Creates an empty table.
+  Creates an empty table with ets opts.
   """
   def init(table_opts \\ [:public]) do
-    :ets.new(@table, [:ordered_set, :named_table] ++ table_opts)
+    :ets.new(@table, [:set, :named_table] ++ table_opts)
   end
 
   @doc """
