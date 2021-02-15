@@ -49,7 +49,7 @@ defmodule SnowflexId.Sequence do
 
   # creates a counter initilized with 1
   defp new_counter() do
-    ref = :counters.new(1, [:write_concurrency])
+    ref = :counters.new(1, [])
     :counters.put(ref, 1, 1)
     ref
   end
