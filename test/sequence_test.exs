@@ -1,4 +1,4 @@
-defmodule SnowflexSequenceTest do
+defmodule SnowflexId.SequenceTest do
   use ExUnit.Case, async: true
 
   alias SnowflexId.Sequence

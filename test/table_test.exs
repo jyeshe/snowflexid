@@ -1,4 +1,4 @@
-defmodule SnowflexTableTest do
+defmodule SnowflexId.TableTest do
   use ExUnit.Case, async: true
 
   alias SnowflexId.Table
