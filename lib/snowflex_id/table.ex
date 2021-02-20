@@ -5,7 +5,6 @@ defmodule SnowflexId.Table do
 
   alias SnowflexId.Encoder
 
-  # TODO: names should be set dinamically, so multiple instances can be ran
   @table :snowflexid_ets
   @increment_op {2, 1, Encoder.sequence_limit(), 1}
 
