@@ -1,15 +1,18 @@
-defmodule SnowflexIdTest do
+defmodule SnowflexId.EncoderTest do
   use ExUnit.Case, async: true
-  doctest SnowflexId
 
-  @node_sample 0..SnowflexId.node_limit()
-  @seq_sample 0..SnowflexId.sequence_limit()
+  alias SnowflexId.Encoder
+
+  doctest SnowflexId.Encoder
+
+  @node_sample 0..Encoder.node_limit()
+  @seq_sample 0..Encoder.sequence_limit()
 
   test "generate/2" do
     Enum.each(@node_sample, fn i ->
       list =
         Enum.map(@seq_sample, fn j ->
-          {:ok, id} = SnowflexId.generate(i, j)
+          {:ok, id} = Encoder.generate(i, j)
           id
         end)
 
@@ -21,7 +24,7 @@ defmodule SnowflexIdTest do
     Enum.each(@node_sample, fn i ->
       list =
         Enum.map(@seq_sample, fn j ->
-          SnowflexId.generate!(i, j)
+          Encoder.generate!(i, j)
         end)
 
       assert list == Enum.sort(list)
