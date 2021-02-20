@@ -2,8 +2,8 @@
 
 Generator of Snowflake ID which is smaller and faster than UUID (but not random).
 
-It's ordered by timestamp after Elixir time (epoch since 2011-01-09) and 
-avoid colissions in cluster based on process generator id which here is called node id.
+It's ordered by timestamp after Elixir time (epoch since 2011-01-09) and avoid 
+colissions in cluster based on process generator id which is here called by node id.
 
 The ID is an integer that fits into a PostgreSQL biginit and it's composed by:
   41 bits of timestamp with millisecond precision, using a custom epoch.
@@ -30,7 +30,7 @@ serves multiple node ids.
 
 This is optional if you want to setup a custom epoch (in milliseconds).
 
-config :snowflexid, epoch, 1294566368000
+config :snowflexid, :custom_epoch, 1294566368000
 
 ## Installation
 
