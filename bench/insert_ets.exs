@@ -13,10 +13,10 @@ Benchee.run(%{
   end,
   "snowflexid_ets" => fn ->
     table = :ets.new(:table, [:ordered_set])
-    {:ok, snow_seq} = SnowflexSequence.new(1)
+    {:ok, snow_seq} = SnowflexId.Sequence.new(1)
 
     Enum.each(sample, fn _i ->
-      record = {SnowflexSequence.generate!(snow_seq), NaiveDateTime.utc_now()}
+      record = {SnowflexId.Sequence.generate!(snow_seq), NaiveDateTime.utc_now()}
       :ets.insert(table, record)
     end)
   end,

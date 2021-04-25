@@ -11,22 +11,20 @@ defmodule SnowflexId.Table do
   @doc """
   Creates an empty table with ets opts.
   """
+  @spec init(list()) :: true
   def init(table_opts \\ [:public]) do
     :ets.new(@table, [:set, :named_table] ++ table_opts)
   end
 
   @doc """
-  Generates a Snowflex ID reseting sequence number when reachs the limit
-  or returns :error if node_id is out of bounds.
-  """
-  @spec generate(integer) :: {:ok, integer} | :error
-  def generate(node_id) do
-    if node_id >= 0 or node_id <= Encoder.node_limit() do
-      seq_num = :ets.update_counter(@table, node_id, @increment_op, {node_id, 0})
+  Generates a Snowflex ID reseting sequence number when reachs the limit.
 
-      {:ok, Encoder.generate!(node_id, seq_num)}
-    else
-      :error
-    end
+  Raises `SnowflexId.NodeOverflowError` when node_id is not between 0 and 1023
+  """
+  @spec generate!(integer()) :: integer()
+  def generate!(node_id) do
+    seq_num = :ets.update_counter(@table, node_id, @increment_op, {node_id, 0})
+
+    Encoder.generate!(node_id, seq_num)
   end
 end
