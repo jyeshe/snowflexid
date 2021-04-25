@@ -24,7 +24,9 @@ defmodule SnowflexId.Encoder do
   def generate!(node_id, sequence_num) do
     cond do
       sequence_num > sequence_limit() ->
-        raise SnowflexId.SequenceOverflowError, sequence_number: sequence_num, sequence_max: sequence_limit()
+        raise SnowflexId.SequenceOverflowError,
+          sequence_number: sequence_num,
+          sequence_max: sequence_limit()
 
       node_id > node_limit() ->
         raise SnowflexId.NodeOverflowError, node_id: node_id, node_limit: node_limit()
@@ -35,8 +37,9 @@ defmodule SnowflexId.Encoder do
   end
 
   @doc "Generates an id for a node continuing with the sequence number."
-  @spec generate(integer, integer) :: {:ok, integer} | {:error, :sequence_overflow | :node_overflow}
-  def generate(node_id, sequence_num)  do
+  @spec generate(integer, integer) ::
+          {:ok, integer} | {:error, :sequence_overflow | :node_overflow}
+  def generate(node_id, sequence_num) do
     cond do
       sequence_num > sequence_limit() ->
         {:error, :sequence_overflow}
